@@ -38,15 +38,29 @@ def teste4():
 
         print(f"Produto mais vendido foi {nome}, vendeu {quantidade} unidades.")
 
-with open("vendas.csv", "r" , encoding="utf-8", newline="") as csvfile:
-    leitor_csv = csv.reader(csvfile, delimiter=",")
-    next(leitor_csv, None)
-    vendas = {}
-    quantidade = 0
-    for linha in leitor_csv:
-        if int(linha[3]) > quantidade:
+def teste5():
+    with open("vendas.csv", "r" , encoding="utf-8", newline="") as csvfile:
+        leitor_csv = csv.reader(csvfile, delimiter=",")
+        next(leitor_csv, None)
+        vendas = {}
+        quantidade = 0
+        produto_mais_vendido = ""
+        maior_quantidade = 0
+        for linha in leitor_csv:
             nome = linha[1]
             quantidade = int(linha[3])
             vendas[nome] = vendas.get(nome, 0) + quantidade
+        for nome, quantidade in vendas.items():
+            if quantidade > maior_quantidade:
+                maior_quantidade = quantidade
+                produto_mais_vendido = nome
 
-    print(vendas)
+        print("=== Produto Mais Vendidos ===")
+        if vendas:
+            print(f"Produto: {produto_mais_vendido} / Quantidade de Vendas: {maior_quantidade}")
+        else:
+            print("Não existem vendas registradas")
+
+
+with open("vendas.csv0", "r", encoding="utf-8", newline="") as csvfile:
+    leitor_csv = csv.reader(csvfile, delimiter=",")
